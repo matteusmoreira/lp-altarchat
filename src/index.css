@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 142 70% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 142 70% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142 70% 45%;
+    --radius: 0.625rem;
+    
+    /* WhatsApp Colors */
+    --whatsapp-green: #25D366;
+    --whatsapp-dark: #128C7E;
+    --whatsapp-darker: #075E54;
+    --whatsapp-light: #DCF8C6;
+    --whatsapp-bg: #ECE5DD;
+    
+    /* Animation Easings */
+    --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-expo-in: cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-dramatic: cubic-bezier(0.87, 0, 0.13, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-inter antialiased;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins font-semibold;
+  }
+}
+
+@layer components {
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-xl border border-white/10;
+  }
+  
+  .glass-whatsapp {
+    background: rgba(37, 211, 102, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(37, 211, 102, 0.2);
+  }
+  
+  /* Gradient Backgrounds */
+  .gradient-whatsapp {
+    background: linear-gradient(135deg, var(--whatsapp-green) 0%, var(--whatsapp-dark) 100%);
+  }
+  
+  .gradient-whatsapp-dark {
+    background: linear-gradient(135deg, var(--whatsapp-dark) 0%, var(--whatsapp-darker) 100%);
+  }
+  
+  .gradient-mesh {
+    background: 
+      radial-gradient(ellipse at 20% 30%, rgba(37, 211, 102, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(18, 140, 126, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(220, 248, 198, 0.1) 0%, transparent 60%);
+  }
+  
+  /* Button Styles */
+  .btn-primary {
+    @apply px-8 py-4 bg-whatsapp-green text-white font-semibold rounded-xl transition-all duration-300;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  }
+  
+  .btn-primary:hover {
+    @apply scale-105;
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+  }
+  
+  .btn-secondary {
+    @apply px-8 py-4 bg-white/10 backdrop-blur-md text-white font-semibold rounded-xl border border-white/20 transition-all duration-300;
+  }
+  
+  .btn-secondary:hover {
+    @apply bg-white/20 scale-105;
+  }
+  
+  /* Card Styles */
+  .card-glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 transition-all duration-500;
+    transform-style: preserve-3d;
+  }
+  
+  .card-glass:hover {
+    @apply bg-white/10 border-whatsapp-green/40;
+    transform: translateY(-10px) translateZ(30px);
+    box-shadow: 0 20px 40px rgba(37, 211, 102, 0.2);
+  }
+  
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--whatsapp-green) 0%, var(--whatsapp-dark) 100%);
+  }
+  
+  /* Glow Effects */
+  .glow-green {
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+  }
+  
+  .glow-green-lg {
+    box-shadow: 0 0 40px rgba(37, 211, 102, 0.6);
+  }
+  
+  /* Section Styles */
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-24;
+  }
+  
+  /* Animation Utilities */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s var(--ease-expo-out), transform 0.6s var(--ease-expo-out);
+  }
+  
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Particle Background */
+  .particles-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(37, 211, 102, 0.3);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Floating Elements */
+  .floating {
+    animation: float 4s ease-in-out infinite;
+  }
+  
+  .floating-slow {
+    animation: float-slow 6s ease-in-out infinite;
+  }
+  
+  /* Underline Animation */
+  .underline-animation {
+    position: relative;
+  }
+  
+  .underline-animation::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--whatsapp-green);
+    transition: all 0.3s var(--ease-expo-out);
+    transform: translateX(-50%);
+  }
+  
+  .underline-animation:hover::after {
+    width: 100%;
+  }
+  
+  /* 3D Card Effect */
+  .card-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.6s var(--ease-expo-out);
+  }
+  
+  .card-3d:hover {
+    transform: rotateY(0deg) scale(1.02);
+  }
+  
+  /* Icon Rotation on Hover */
+  .icon-rotate {
+    transition: transform 0.4s var(--ease-expo-out);
+  }
+  
+  .icon-rotate:hover {
+    transform: rotate(360deg);
+  }
+  
+  /* Shimmer Effect */
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+  
+  /* Noise Texture Overlay */
+  .noise-overlay {
+    position: relative;
+  }
+  
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+}
+
+@layer utilities {
+  /* Custom Scrollbar */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Perspective Utilities */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  /* Backface Visibility */
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  /* GPU Acceleration */
+  .gpu-accelerate {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  /* Clip Path Animations */
+  .clip-reveal {
+    clip-path: inset(0 100% 0 0);
+    animation: clipReveal 0.8s var(--ease-expo-out) forwards;
+  }
+  
+  @keyframes clipReveal {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  
+  /* Stagger Animation Delays */
+  .stagger-1 { animation-delay: 0.08s; }
+  .stagger-2 { animation-delay: 0.16s; }
+  .stagger-3 { animation-delay: 0.24s; }
+  .stagger-4 { animation-delay: 0.32s; }
+  .stagger-5 { animation-delay: 0.40s; }
+  .stagger-6 { animation-delay: 0.48s; }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
