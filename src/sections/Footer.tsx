@@ -1,13 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   MessageCircle,
-  Facebook,
-  Instagram,
-  Linkedin,
-  Youtube,
   Mail,
   Phone,
-  MapPin,
   ArrowRight
 } from 'lucide-react';
 import { WHATSAPP_LINK, WHATSAPP_NUMBER } from '../constants';
@@ -96,24 +91,6 @@ export function Footer() {
               A plataforma completa para gerenciar seu atendimento no WhatsApp.
               Escale seu negócio com eficiência.
             </p>
-
-            {/* Social Links */}
-            <div className="flex gap-2 sm:gap-3">
-              {[
-                { icon: Facebook, href: '#' },
-                { icon: Instagram, href: '#' },
-                { icon: Linkedin, href: '#' },
-                { icon: Youtube, href: '#' },
-              ].map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 rounded-lg sm:rounded-xl flex items-center justify-center text-gray-400 transition-all duration-300 hover:bg-whatsapp-green hover:text-white hover:scale-110"
-                >
-                  <social.icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Product Links */}
@@ -177,10 +154,6 @@ export function Footer() {
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-whatsapp-green flex-shrink-0" />
                 <span>{WHATSAPP_NUMBER}</span>
               </a>
-              <div className="flex items-center gap-2.5 sm:gap-3 text-gray-400 text-sm">
-                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-whatsapp-green flex-shrink-0" />
-                <span>Brasil/RJ</span>
-              </div>
             </div>
 
             {/* Newsletter */}
