@@ -10,6 +10,7 @@ import {
   MapPin,
   ArrowRight
 } from 'lucide-react';
+import { WHATSAPP_LINK, WHATSAPP_NUMBER } from '../constants';
 
 const productLinks = [
   { label: 'Funcionalidades', href: '#features' },
@@ -167,10 +168,15 @@ export function Footer() {
                 <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-whatsapp-green flex-shrink-0" />
                 <span className="break-all">contato@altartech.com.br</span>
               </div>
-              <div className="flex items-center gap-2.5 sm:gap-3 text-gray-400 text-sm">
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 sm:gap-3 text-gray-400 text-sm hover:text-whatsapp-green transition-colors"
+              >
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-whatsapp-green flex-shrink-0" />
-                <span>(22) 99902-1889</span>
-              </div>
+                <span>{WHATSAPP_NUMBER}</span>
+              </a>
               <div className="flex items-center gap-2.5 sm:gap-3 text-gray-400 text-sm">
                 <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-whatsapp-green flex-shrink-0" />
                 <span>Brasil/RJ</span>

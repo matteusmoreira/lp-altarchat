@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Check, Sparkles, Zap, Crown } from 'lucide-react';
+import { WHATSAPP_LINK } from '../constants';
 
 const plans = [
   {
@@ -201,12 +202,12 @@ export function Pricing() {
 
                 {/* CTA Button */}
                 <a
-                  href="https://chat.altartech.com.br"
+                  href={WHATSAPP_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`w-full py-4 sm:py-5 rounded-2xl font-bold text-center text-sm sm:text-base transition-all duration-300 shadow-lg block ${plan.popular
-                      ? 'bg-whatsapp-green text-white hover:shadow-whatsapp-green/40 hover:scale-[1.03]'
-                      : 'bg-white text-gray-700 border border-gray-200 hover:border-whatsapp-green/50 hover:text-whatsapp-green hover:shadow-gray-200/50 hover:scale-[1.03]'
+                    ? 'bg-whatsapp-green text-white hover:shadow-whatsapp-green/40 hover:scale-[1.03]'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:border-whatsapp-green/50 hover:text-whatsapp-green hover:shadow-gray-200/50 hover:scale-[1.03]'
                     }`}
                 >
                   {plan.cta}

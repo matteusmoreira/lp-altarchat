@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Play, CheckCircle2, MessageCircle, Users, Zap, BarChart3 } from 'lucide-react';
 import { ParticlesBackground } from '../components/ParticlesBackground';
+import { WHATSAPP_LINK } from '../constants';
 
 export function Hero() {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,12 +11,6 @@ export function Hero() {
     setIsVisible(true);
   }, []);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section
@@ -96,7 +91,7 @@ export function Hero() {
                 }`}
             >
               <a
-                href="https://chat.altartech.com.br"
+                href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-whatsapp-green text-white font-bold rounded-2xl transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-whatsapp-green/40 text-sm sm:text-lg shadow-xl"
@@ -104,13 +99,15 @@ export function Hero() {
                 Teste Grátis por 7 Dias
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1.5" />
               </a>
-              <button
-                onClick={() => scrollToSection('#features')}
-                className="group flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-white/80 backdrop-blur-md text-gray-700 font-semibold rounded-xl border border-gray-200 transition-all duration-300 hover:bg-white hover:scale-105 hover:border-whatsapp-green/30 text-sm sm:text-base"
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-white/80 backdrop-blur-md text-gray-700 font-semibold rounded-xl border border-gray-200 transition-all duration-300 hover:bg-white hover:scale-105 hover:border-whatsapp-green/30 text-sm sm:text-base inline-block"
               >
                 <Play className="w-4 h-4 sm:w-5 sm:h-5 text-whatsapp-green" />
                 Ver Demonstração
-              </button>
+              </a>
             </div>
 
             {/* Trust Badges */}

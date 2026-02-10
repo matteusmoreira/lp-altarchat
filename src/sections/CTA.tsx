@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Sparkles, Users } from 'lucide-react';
+import { WHATSAPP_LINK } from '../constants';
 
 export function CTA() {
   const [isVisible, setIsVisible] = useState(false);
@@ -104,7 +105,7 @@ export function CTA() {
             }`}
         >
           <a
-            href="https://chat.altartech.com.br"
+            href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 px-10 sm:px-12 py-5 sm:py-6 bg-white text-whatsapp-dark font-black text-lg sm:text-xl rounded-2xl transition-all duration-300 hover:scale-[1.05] hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] shadow-2xl"

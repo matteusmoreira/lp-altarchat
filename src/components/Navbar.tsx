@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MessageCircle, Menu, X } from 'lucide-react';
+import { WHATSAPP_LINK } from '../constants';
 
 const navLinks = [
   { label: 'Funcionalidades', href: '#features' },
@@ -46,8 +47,8 @@ export function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-            ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100'
-            : 'bg-transparent'
+          ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100'
+          : 'bg-transparent'
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,12 +86,14 @@ export function Navbar() {
 
             {/* CTA Button - Desktop */}
             <div className="hidden lg:block">
-              <button
-                onClick={() => scrollToSection('#pricing')}
-                className="px-5 xl:px-6 py-2.5 bg-whatsapp-green text-white font-semibold text-sm rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-glow"
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 xl:px-6 py-2.5 bg-whatsapp-green text-white font-semibold text-sm rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-glow inline-block"
               >
                 Começar Agora
-              </button>
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -112,8 +115,8 @@ export function Navbar() {
       {/* Mobile Menu Overlay */}
       <div
         className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${isMobileMenuOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
+          ? 'opacity-100 pointer-events-auto'
+          : 'opacity-0 pointer-events-none'
           }`}
       >
         {/* Backdrop */}
@@ -125,8 +128,8 @@ export function Navbar() {
         {/* Menu Panel */}
         <div
           className={`absolute top-16 sm:top-20 left-0 right-0 bg-white border-b border-gray-100 shadow-xl transition-all duration-300 ${isMobileMenuOpen
-              ? 'translate-y-0 opacity-100'
-              : '-translate-y-4 opacity-0'
+            ? 'translate-y-0 opacity-100'
+            : '-translate-y-4 opacity-0'
             }`}
         >
           <div className="px-4 py-6 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto">
@@ -143,12 +146,14 @@ export function Navbar() {
               </button>
             ))}
             <div className="pt-4 mt-4 border-t border-gray-100">
-              <button
-                onClick={() => scrollToSection('#pricing')}
-                className="w-full px-4 py-4 bg-whatsapp-green text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-glow text-base"
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full px-4 py-4 bg-whatsapp-green text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-glow text-base text-center block"
               >
                 Começar Agora
-              </button>
+              </a>
             </div>
           </div>
         </div>
