@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  MessageCircle,
   Mail,
   Phone,
   ArrowRight
 } from 'lucide-react';
 import { WHATSAPP_LINK, WHATSAPP_NUMBER } from '../constants';
+import logoImg from '../assets/logo.png';
 
 const productLinks = [
   { label: 'Funcionalidades', href: '#features' },
@@ -78,13 +78,19 @@ export function Footer() {
               }`}
           >
             {/* Logo */}
-            <a href="#" className="flex items-center gap-2 mb-4 sm:mb-6">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-whatsapp-green rounded-xl flex items-center justify-center">
-                <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <span className="font-poppins font-bold text-base sm:text-lg">
-                Altar <span className="text-whatsapp-green">Chat</span>
-              </span>
+            <a
+              href="#"
+              className="inline-flex items-center mb-4 sm:mb-6 transition-all duration-300 hover:scale-105"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              <img
+                src={logoImg}
+                alt="Altar Chat"
+                className="h-18 sm:h-22 w-auto object-contain brightness-0 invert"
+              />
             </a>
 
             <p className="text-gray-400 text-sm leading-relaxed mb-5 sm:mb-6 max-w-xs">

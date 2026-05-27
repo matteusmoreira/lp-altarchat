@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { MessageCircle, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { WHATSAPP_LINK } from '../constants';
+import logoImg from '../assets/logo.png';
 
 const navLinks = [
   { label: 'Funcionalidades', href: '#features' },
@@ -56,19 +57,18 @@ export function Navbar() {
             {/* Logo */}
             <a
               href="#"
-              className="flex items-center gap-2 group"
+              className="flex items-center group"
               onClick={(e) => {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 setIsMobileMenuOpen(false);
               }}
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-whatsapp-green rounded-xl flex items-center justify-center transition-all duration-500 group-hover:rotate-[360deg] group-hover:shadow-glow">
-                <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <span className="font-poppins font-bold text-base sm:text-lg text-gray-900">
-                Altar <span className="text-whatsapp-green">Chat</span>
-              </span>
+              <img
+                src={logoImg}
+                alt="Altar Chat"
+                className="h-16 sm:h-22 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              />
             </a>
 
             {/* Desktop Navigation */}
