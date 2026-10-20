@@ -58,13 +58,14 @@ Gancho: a página é o próprio produto. Começa com uma caixa de entrada que se
 
 ## Estado (2026-10-20)
 
-- Todas as seções prontas na branch `feat/nova-landing`, sem commit e sem push.
+- Todas as seções prontas na branch `feat/nova-landing`, enviada ao GitHub e **não mesclada** na `main`. Prévia (exige login no Vercel): https://lp-altarchat-git-feat-nova-landing-matteusmoreira.vercel.app
 - `npm run lint` e `npm run build` passam. `node scratch/landing/check.mjs` (no repo do app) não acusa erro de console nem rolagem horizontal em 360, 390, 768, 1024 e 1440 px. Com movimento reduzido, a seção do caos fica estática e já organizada.
 - Seções antigas removidas: Testimonials, HowItWorks, CTA, ParticlesBackground e `assets/logo.png`. A pasta `src/components/ui/` (shadcn) e o `src/App.css` já não eram usados antes; ficaram como estavam.
 
 ## Armadilhas
 
 - **`node_modules` e `dist/` estão versionados.** O dev server reescreve `node_modules/.vite/deps/*`: `git checkout -- node_modules/.vite` antes do commit, e `npm run build` para atualizar o `dist/`.
+- **Deploy pelo Git falhava** com `node_modules/.bin/tsc: Permission denied` (a `node_modules` versionada não tem bit de execução). O `vercel.json` agora usa `"installCommand": "npm ci"`. Log de um deploy: `npx vercel inspect <dpl_id> --logs`.
 - **Preflight do Tailwind:** `svg { display: block }`. Ícone no meio do texto quebra a linha; use `display: inline-block`.
 - **Destino de elemento que entra com `transform`:** meça com `offsetLeft`/`offsetTop` (ignoram transform), não com `getBoundingClientRect`. As conversas da seção do caos pousavam 24px abaixo do lugar por isso.
 - **Prévia logo após recarregar:** a captura sai em branco ou no meio das animações de entrada. Espere uns 6s ou use o Playwright.
