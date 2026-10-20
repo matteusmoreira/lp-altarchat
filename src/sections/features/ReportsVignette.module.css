@@ -1,0 +1,136 @@
+.frame {
+  background: var(--paper-2);
+}
+
+.body {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.kpi,
+.panel {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+}
+
+.kpi span,
+.panelTitle {
+  color: var(--ink-3);
+  font-size: 12px;
+}
+
+.kpi strong {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.panel {
+  gap: 10px;
+  align-content: start;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: 54px 1fr 24px;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+}
+
+.barName {
+  color: var(--ink-2);
+}
+
+.barTrack {
+  height: 10px;
+  border-radius: var(--r-pill);
+  background: var(--paper-2);
+}
+
+.barTrack span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green-600);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 900ms var(--ease-out) var(--d);
+}
+
+.frame[data-active='true'] .barTrack span {
+  transform: scaleX(var(--w));
+}
+
+.barValue {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.spark {
+  display: block;
+  width: 100%;
+  height: 92px;
+  overflow: visible;
+}
+
+.sparkLine {
+  fill: none;
+  stroke: var(--green-600);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1400ms var(--ease-out) 200ms;
+}
+
+.frame[data-active='true'] .sparkLine {
+  stroke-dashoffset: 0;
+}
+
+.axis {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-3);
+  font-size: 11px;
+}
+
+@media (max-width: 520px) {
+  .panels {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi strong {
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barTrack span {
+    transform: scaleX(var(--w));
+  }
+
+  .sparkLine {
+    stroke-dashoffset: 0;
+  }
+}

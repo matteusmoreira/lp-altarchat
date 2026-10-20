@@ -1,163 +1,96 @@
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { WHATSAPP_LINK } from '../constants';
-import logoImg from '../assets/logo.png';
+import { useEffect, useState } from 'react';
+import { ArrowRight, Menu, X } from 'lucide-react';
+import { APP_URL, TRIAL_LINK } from '../constants';
+import { useScrollFrame } from '../hooks/useScrollFrame';
+import { Logo } from './Logo';
+import styles from './Navbar.module.css';
 
-const navLinks = [
-  { label: 'Funcionalidades', href: '#features' },
-  { label: 'Como Funciona', href: '#how-it-works' },
-  { label: 'Planos', href: '#pricing' },
-  { label: 'Depoimentos', href: '#testimonials' },
-  { label: 'FAQ', href: '#faq' },
+const LINKS = [
+  { label: 'Recursos', href: '#recursos' },
+  { label: 'Como começar', href: '#comecar' },
+  { label: 'Planos', href: '#planos' },
+  { label: 'Dúvidas', href: '#duvidas' },
 ];
 
+type Tone = 'top' | 'forest' | 'paper';
+
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [tone, setTone] = useState<Tone>('top');
+  const [open, setOpen] = useState(false);
+
+  // O hero marca onde o verde termina; a barra troca de cor quando passa dali.
+  useScrollFrame(() => {
+    const forestEnd = document.getElementById('hero-forest-end');
+    const navHeight = 68;
+    let next: Tone = window.scrollY < 8 ? 'top' : 'forest';
+    if (forestEnd && forestEnd.getBoundingClientRect().top <= navHeight) next = 'paper';
+    setTone((prev) => (prev === next ? prev : next));
+  });
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
     };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMobileMenuOpen]);
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
-  };
+  const dark = tone !== 'paper' && !open;
 
   return (
-    <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100'
-          : 'bg-transparent'
-          }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
-            {/* Logo */}
-            <a
-              href="#"
-              className="flex items-center group"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                setIsMobileMenuOpen(false);
-              }}
-            >
-              <img
-                src={logoImg}
-                alt="Altar Chat"
-                className="h-16 sm:h-22 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-              />
+    <header className={styles.nav} data-tone={open ? 'paper' : tone}>
+      <div className={`container ${styles.inner}`}>
+        <a href="#topo" className={styles.brand} aria-label="Altar Chat, voltar ao início">
+          <Logo tone={dark ? 'dark' : 'light'} />
+        </a>
+
+        <nav className={styles.links} aria-label="Seções">
+          {LINKS.map((link) => (
+            <a key={link.href} href={link.href}>
+              {link.label}
             </a>
+          ))}
+        </nav>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => scrollToSection(link.href)}
-                  className="relative font-medium text-sm text-gray-700 hover:text-whatsapp-green transition-colors duration-300 underline-animation py-2"
-                >
-                  {link.label}
-                </button>
-              ))}
-            </div>
-
-            {/* CTA Button - Desktop */}
-            <div className="hidden lg:block">
-              <a
-                href={WHATSAPP_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 xl:px-6 py-2.5 bg-whatsapp-green text-white font-semibold text-sm rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-glow inline-block"
-              >
-                Começar Agora
-              </a>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-gray-700" />
-              ) : (
-                <Menu className="w-6 h-6 text-gray-700" />
-              )}
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${isMobileMenuOpen
-          ? 'opacity-100 pointer-events-auto'
-          : 'opacity-0 pointer-events-none'
-          }`}
-      >
-        {/* Backdrop */}
-        <div
-          className="absolute inset-0 bg-black/20 backdrop-blur-sm"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-
-        {/* Menu Panel */}
-        <div
-          className={`absolute top-16 sm:top-20 left-0 right-0 bg-white border-b border-gray-100 shadow-xl transition-all duration-300 ${isMobileMenuOpen
-            ? 'translate-y-0 opacity-100'
-            : '-translate-y-4 opacity-0'
-            }`}
-        >
-          <div className="px-4 py-6 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto">
-            {navLinks.map((link, index) => (
-              <button
-                key={link.href}
-                onClick={() => scrollToSection(link.href)}
-                className="block w-full text-left px-4 py-3.5 text-gray-700 font-medium rounded-xl hover:bg-whatsapp-green/10 hover:text-whatsapp-green transition-colors text-base"
-                style={{
-                  animationDelay: `${index * 50}ms`,
-                }}
-              >
-                {link.label}
-              </button>
-            ))}
-            <div className="pt-4 mt-4 border-t border-gray-100">
-              <a
-                href={WHATSAPP_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full px-4 py-4 bg-whatsapp-green text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-glow text-base text-center block"
-              >
-                Começar Agora
-              </a>
-            </div>
-          </div>
+        <div className={styles.actions}>
+          <a href={APP_URL} className={styles.login}>
+            Entrar
+          </a>
+          <a href={TRIAL_LINK} target="_blank" rel="noopener noreferrer" className={`btn btn--primary ${styles.cta}`}>
+            Testar grátis
+            <ArrowRight size={18} aria-hidden="true" />
+          </a>
+          <button
+            type="button"
+            className={styles.menuButton}
+            aria-expanded={open}
+            aria-controls="menu-movel"
+            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+          </button>
         </div>
       </div>
-    </>
+
+      <div id="menu-movel" className={styles.sheet} data-open={open} hidden={!open}>
+        <nav aria-label="Seções" className="container">
+          {LINKS.map((link) => (
+            <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              {link.label}
+            </a>
+          ))}
+          <div className={styles.sheetActions}>
+            <a href={TRIAL_LINK} target="_blank" rel="noopener noreferrer" className="btn btn--primary btn--lg">
+              Testar grátis por 7 dias
+            </a>
+            <a href={APP_URL} className="btn btn--ghost btn--lg">
+              Entrar no Altar Chat
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
   );
 }
