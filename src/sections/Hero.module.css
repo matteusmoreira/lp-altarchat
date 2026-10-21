@@ -1,0 +1,203 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding-top: calc(var(--nav-h) + clamp(48px, 7vw, 96px));
+  background: var(--forest-900);
+  color: var(--on-dark);
+  text-align: center;
+}
+
+/* Grade fina do login do app, apagando para as bordas */
+.grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--line-dark) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-dark) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 20%, transparent 75%);
+  opacity: 0.55;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 28px;
+  padding: 7px 14px 7px 12px;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--r-pill);
+  color: var(--on-dark-2);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  animation: fadeUp var(--dur-enter) var(--ease-out) 60ms backwards;
+}
+
+.live {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green-500);
+}
+
+.live::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--green-500);
+  animation: ping 2s var(--ease-out) infinite;
+}
+
+@keyframes ping {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+
+.title {
+  display: grid;
+  margin: 0;
+  font-size: var(--t-hero);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--green-500);
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+  padding: 0.04em 0.06em 0.1em;
+  margin-bottom: -0.08em;
+}
+
+.line > span {
+  display: inline-block;
+  animation: lineUp 1000ms var(--ease-out) backwards;
+  animation-delay: calc(140ms + var(--i) * 110ms);
+}
+
+@keyframes lineUp {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+.lead {
+  max-width: 44rem;
+  margin: 28px 0 0;
+  color: var(--on-dark-2);
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  animation: fadeUp var(--dur-enter) var(--ease-out) 420ms backwards;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 36px;
+  animation: fadeUp var(--dur-enter) var(--ease-out) 520ms backwards;
+}
+
+.proof {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--on-dark-3);
+  font-size: var(--t-sm);
+  animation: fadeUp var(--dur-enter) var(--ease-out) 600ms backwards;
+}
+
+.proof li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.proof svg {
+  color: var(--green-500);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.stageWrap {
+  position: relative;
+  margin-top: clamp(56px, 8vw, 88px);
+  max-width: calc(1120px + var(--gutter) * 2);
+}
+
+/* Onde o verde do hero termina (a navbar observa este elemento) */
+.forestEnd {
+  position: absolute;
+  top: 46%;
+  bottom: 0;
+  left: 50%;
+  z-index: -1;
+  width: 100vw;
+  background: var(--paper-2);
+  transform: translateX(-50%);
+}
+
+.stage {
+  transform: perspective(1800px) rotateX(14deg) scale(0.93);
+  transform-origin: 50% 0%;
+  will-change: transform;
+}
+
+.stageInner {
+  animation: stageIn 1200ms var(--ease-out) 380ms backwards;
+}
+
+@keyframes stageIn {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+}
+
+@media (max-width: 640px) {
+  .actions {
+    flex-direction: column;
+    align-self: stretch;
+  }
+
+  .forestEnd {
+    top: 52%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    transform: none;
+  }
+
+  .live::after {
+    display: none;
+  }
+}

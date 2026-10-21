@@ -1,0 +1,187 @@
+/* Peças comuns das vinhetas de recursos (mockups do app em tamanho reduzido) */
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  height: 420px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-window);
+  background: var(--wa-panel);
+  box-shadow: var(--shadow-float);
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 60px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--wa-panel);
+}
+
+.who {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.who strong {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.who span {
+  overflow: hidden;
+  color: var(--ink-3);
+  font-size: 12.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.swap {
+  animation: fadeIn var(--dur-slow) var(--ease-out);
+}
+
+.wallpaper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  height: calc(100% - 60px);
+  padding: 14px 18px;
+  background: var(--wa-wallpaper);
+}
+
+.bubble {
+  max-width: 82%;
+  padding: 6px 9px 7px;
+  border-radius: var(--r-bubble);
+  box-shadow: 0 1px 0.5px rgb(11 20 26 / 0.13);
+  font-size: 13.5px;
+  line-height: 18.5px;
+  animation: bubbleIn 420ms var(--ease-out) backwards;
+}
+
+.in {
+  align-self: flex-start;
+  border-top-left-radius: 0;
+  background: var(--wa-bubble-in);
+}
+
+.out {
+  align-self: flex-end;
+  border-top-right-radius: 0;
+  background: var(--wa-bubble-out);
+}
+
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  float: right;
+  margin: 6px 0 -3px 10px;
+  color: var(--ink-3);
+  font-size: 10.5px;
+}
+
+.read {
+  color: var(--wa-read);
+}
+
+.note {
+  align-self: flex-end;
+  max-width: 82%;
+  padding: 7px 10px;
+  border: 1px dashed var(--wa-note-line);
+  border-radius: var(--r-bubble);
+  background: var(--wa-note);
+  font-size: 13px;
+  line-height: 18px;
+  animation: bubbleIn 420ms var(--ease-out) backwards;
+}
+
+.noteLabel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--tint-3-ink);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.system {
+  align-self: center;
+  padding: 4px 11px;
+  border-radius: 8px;
+  background: var(--wa-system);
+  box-shadow: 0 1px 0.5px rgb(11 20 26 / 0.13);
+  color: var(--ink-2);
+  font-size: 12px;
+  animation: bubbleIn 420ms var(--ease-out) backwards;
+}
+
+.composer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  margin-top: 6px;
+  padding: 0 14px;
+  border-radius: 23px;
+  background: var(--wa-panel);
+  box-shadow: 0 1px 0.5px rgb(11 20 26 / 0.13);
+  color: var(--ink-3);
+}
+
+.caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 17px;
+  margin-left: 1px;
+  vertical-align: -3px;
+  background: var(--green-600);
+  animation: caret 1s steps(1) infinite;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill);
+  color: var(--ink-2);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.pillGreen {
+  border-color: transparent;
+  background: var(--mint);
+  color: var(--green-700);
+  font-weight: 500;
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}

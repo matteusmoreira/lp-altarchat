@@ -1,28 +1,28 @@
 import { Navbar } from './components/Navbar';
 import { Hero } from './sections/Hero';
+import { ChaosToOrder } from './sections/ChaosToOrder';
 import { Features } from './sections/Features';
-import { HowItWorks } from './sections/HowItWorks';
+import { Steps } from './sections/Steps';
 import { Pricing } from './sections/Pricing';
-import { Testimonials } from './sections/Testimonials';
 import { FAQ } from './sections/FAQ';
-import { CTA } from './sections/CTA';
+import { FinalCTA } from './sections/FinalCTA';
 import { Footer } from './sections/Footer';
 
 function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <>
       <Navbar />
       <main>
         <Hero />
+        <ChaosToOrder />
         <Features />
-        <HowItWorks />
+        <Steps />
         <Pricing />
-        <Testimonials />
         <FAQ />
-        <CTA />
+        <FinalCTA />
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
 

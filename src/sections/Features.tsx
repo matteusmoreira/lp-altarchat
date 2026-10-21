@@ -1,165 +1,176 @@
-import { useEffect, useRef, useState } from 'react';
-import { 
-  Users, 
-  Bot, 
-  BarChart3, 
-  Code, 
-  Tags, 
-  Send,
-  Sparkles
-} from 'lucide-react';
+import { useEffect, useRef, useState, type ComponentType } from 'react';
+import { Check } from 'lucide-react';
+import { Reveal } from '../components/Reveal';
+import { AiVignette } from './features/AiVignette';
+import { CampaignVignette } from './features/CampaignVignette';
+import { FlowVignette } from './features/FlowVignette';
+import { ReportsVignette } from './features/ReportsVignette';
+import { TeamVignette } from './features/TeamVignette';
+import styles from './Features.module.css';
 
-const features = [
+type Chapter = {
+  id: string;
+  label: string;
+  title: string;
+  text: string;
+  points: string[];
+  Vignette: ComponentType<{ active: boolean }>;
+};
+
+const CHAPTERS: Chapter[] = [
   {
-    icon: Users,
-    title: 'Múltiplos Atendentes',
-    description: 'Adicione quantos atendentes precisar. Cada um com seu próprio acesso e fila de atendimento organizada.',
-    color: 'from-blue-500 to-blue-600',
+    id: 'atendimento',
+    label: 'Atendimento em equipe',
+    title: 'Várias pessoas no mesmo número, cada uma no que é dela.',
+    text: 'As conversas caem na fila do setor e o atendente vê o histórico inteiro. Precisa de ajuda? Deixa uma nota que o cliente não vê ou transfere sem perder nada.',
+    points: [
+      'Filas por setor e distribuição automática',
+      'Notas internas e transferência com histórico',
+      'Respostas rápidas com /',
+      'Etiquetas, Kanban e permissões por atendente',
+    ],
+    Vignette: TeamVignette,
   },
   {
-    icon: Bot,
-    title: 'Chatbot Inteligente',
-    description: 'Automatize respostas frequentes com nosso construtor de chatbot visual. Economize tempo e padronize o atendimento.',
-    color: 'from-purple-500 to-purple-600',
+    id: 'automacoes',
+    label: 'Automações',
+    title: 'O que se repete, o fluxo resolve sozinho.',
+    text: 'Monte o caminho da conversa arrastando blocos: boas-vindas, horário de atendimento, menu de setores e encaminhamento para a fila certa. Sem programar.',
+    points: [
+      'Gatilho por primeira mensagem ou palavra-chave',
+      'Condições, menus e esperas',
+      'Follow-up e mensagens agendadas',
+    ],
+    Vignette: FlowVignette,
   },
   {
-    icon: BarChart3,
-    title: 'Relatórios Detalhados',
-    description: 'Acompanhe métricas em tempo real. Tempo de resposta, satisfação do cliente, conversões e muito mais.',
-    color: 'from-green-500 to-green-600',
+    id: 'disparos',
+    label: 'Disparos',
+    title: 'Campanhas com ritmo controlado, contato por contato.',
+    text: 'Você define o intervalo entre os envios e o limite por minuto. Cada contato mostra o horário previsto e o que aconteceu com a mensagem.',
+    points: [
+      'Intervalo aleatório e limite por minuto',
+      'Variações da mensagem com o nome de cada contato',
+      'Agendamento, recorrência e status de cada envio',
+    ],
+    Vignette: CampaignVignette,
   },
   {
-    icon: Code,
-    title: 'Integração API',
-    description: 'Conecte com seus sistemas existentes. CRM, ERP, e-commerce e outras ferramentas via API completa.',
-    color: 'from-orange-500 to-orange-600',
+    id: 'ia',
+    label: 'Inteligência artificial',
+    title: 'Uma IA que responde com os documentos da sua empresa.',
+    text: 'Envie horários, políticas e catálogos. A IA responde sozinha ou sugere a resposta para o atendente aprovar, e pausa quando alguém da equipe assume.',
+    points: [
+      'Base de conhecimento com seus arquivos',
+      'Modo automático ou com aprovação',
+      'Pausa quando um humano entra na conversa',
+    ],
+    Vignette: AiVignette,
   },
   {
-    icon: Tags,
-    title: 'Segmentação de Contatos',
-    description: 'Organize seus contatos com etiquetas personalizadas. Filtre, segmente e personalize suas campanhas.',
-    color: 'from-pink-500 to-pink-600',
-  },
-  {
-    icon: Send,
-    title: 'Campanhas de Disparo',
-    description: 'Envie mensagens em massa de forma inteligente. Agendamento, personalização e relatórios completos.',
-    color: 'from-cyan-500 to-cyan-600',
+    id: 'relatorios',
+    label: 'Relatórios',
+    title: 'Decida olhando número, não impressão.',
+    text: 'Tempo de primeira resposta, volume por atendente e por fila, conversas abertas e resolvidas. Tudo exportável em planilha.',
+    points: ['Tempo de resposta e de atendimento', 'Desempenho por atendente e por fila', 'Exportação em planilha'],
+    Vignette: ReportsVignette,
   },
 ];
 
-export function Features() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
+const MORE = [
+  'Vários números na mesma conta',
+  'Kanban de contatos',
+  'Comunidades e grupos',
+  'Status agendado',
+  'Chat para o seu site',
+  'API e webhooks',
+  'Ferramentas de LGPD',
+  'Tema claro e escuro',
+];
 
+export function Features() {
+  const [active, setActive] = useState(0);
+  const chapterRefs = useRef<(HTMLElement | null)[]>([]);
+
+  // O capítulo ativo é o que cruza a faixa central da tela.
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(Number((entry.target as HTMLElement).dataset.index));
+        });
       },
-      { threshold: 0.1 }
+      { rootMargin: '-45% 0px -45% 0px' },
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    chapterRefs.current.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section
-      id="features"
-      ref={sectionRef}
-      className="relative py-16 sm:py-20 lg:py-32 overflow-hidden"
-    >
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white" />
-      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] lg:w-[600px] lg:h-[600px] bg-whatsapp-green/5 rounded-full blur-[80px] lg:blur-[120px]" />
-      <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] bg-whatsapp-dark/5 rounded-full blur-[60px] lg:blur-[100px]" />
+    <section id="recursos" className={styles.section}>
+      <div className="container">
+        <Reveal className={styles.header}>
+          <p className="eyebrow">Recursos</p>
+          <h2 className="section-title">Tudo o que a operação precisa, numa tela que a equipe já conhece.</h2>
+        </Reveal>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 lg:mb-20">
-          <div
-            className={`inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-whatsapp-green/10 rounded-full mb-4 sm:mb-6 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-          >
-            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-whatsapp-green" />
-            <span className="text-xs sm:text-sm font-medium text-whatsapp-dark">FUNCIONALIDADES</span>
-          </div>
+        <div className={styles.layout}>
+          <nav className={styles.nav} aria-label="Recursos">
+            <ol>
+              {CHAPTERS.map((c, i) => (
+                <li key={c.id}>
+                  <a href={`#${c.id}`} className={styles.navLink} aria-current={i === active ? 'true' : undefined}>
+                    <span className={styles.navNum}>{String(i + 1).padStart(2, '0')}</span>
+                    {c.label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
 
-          <h2
-            className={`font-poppins font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 delay-100 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            Tudo que você precisa para um{' '}
-            <span className="text-gradient">atendimento de excelência</span>
-          </h2>
-
-          <p
-            className={`text-base sm:text-lg text-gray-600 px-2 sm:px-0 transition-all duration-700 delay-200 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            Uma plataforma completa com ferramentas poderosas para gerenciar seu WhatsApp empresarial
-          </p>
-        </div>
-
-        {/* Features Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {features.map((feature, index) => (
-            <div
-              key={feature.title}
-              className={`group relative transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-              }`}
-              style={{ transitionDelay: `${300 + index * 100}ms` }}
-            >
-              <div className="relative h-full bg-white/50 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-gray-100 transition-all duration-500 group-hover:bg-white group-hover:border-whatsapp-green/30 group-hover:shadow-xl group-hover:shadow-whatsapp-green/10 group-hover:-translate-y-1 sm:group-hover:-translate-y-2">
-                {/* Icon */}
-                <div className={`w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 sm:mb-5 lg:mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3`}>
-                  <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-white" />
-                </div>
-
-                {/* Content */}
-                <h3 className="font-poppins font-semibold text-lg sm:text-xl text-gray-900 mb-2 sm:mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
-
-                {/* Hover Glow Effect */}
-                <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-whatsapp-green/0 to-whatsapp-dark/0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div
-          className={`text-center mt-10 sm:mt-14 lg:mt-16 transition-all duration-700 delay-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">E muito mais...</p>
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-            {['Agendamento', 'Notas Internas', 'Transferência', 'Blacklist', 'Respostas Rápidas'].map((item) => (
-              <span
-                key={item}
-                className="px-3 py-1.5 sm:px-4 sm:py-2 bg-whatsapp-green/10 text-whatsapp-dark text-xs sm:text-sm font-medium rounded-full"
+          <div className={styles.chapters}>
+            {CHAPTERS.map(({ id, label, title, text, points, Vignette }, i) => (
+              <article
+                key={id}
+                id={id}
+                data-index={i}
+                ref={(el) => {
+                  chapterRefs.current[i] = el;
+                }}
+                className={styles.chapter}
+                data-active={i === active}
               >
-                {item}
-              </span>
+                <div className={styles.copy}>
+                  <p className={styles.kicker}>
+                    {String(i + 1).padStart(2, '0')} · {label}
+                  </p>
+                  <h3 className={styles.title}>{title}</h3>
+                  <p className={styles.text}>{text}</p>
+                  <ul className={styles.points}>
+                    {points.map((p) => (
+                      <li key={p}>
+                        <Check size={16} aria-hidden="true" />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className={styles.visual} aria-hidden="true">
+                  <Vignette active={i === active} />
+                </div>
+              </article>
             ))}
           </div>
         </div>
+
+        <Reveal className={styles.more}>
+          <span className={styles.moreLabel}>E ainda</span>
+          <ul>
+            {MORE.map((m) => (
+              <li key={m}>{m}</li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

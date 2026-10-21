@@ -1,0 +1,122 @@
+.body {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+}
+
+.rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-600);
+  animation: blink 1s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes blink {
+  to {
+    opacity: 0.25;
+  }
+}
+
+.progress {
+  display: grid;
+  gap: 6px;
+}
+
+.progressLabel {
+  color: var(--ink-2);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.progressLabel strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.bar {
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--r-pill);
+  background: var(--paper-2);
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green-600);
+  transform: scaleX(calc(0.04 + var(--p) * 0.12));
+  transform-origin: left;
+  transition: transform 700ms var(--ease-out);
+}
+
+.list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  border-bottom: 1px solid var(--line);
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.row[data-state='queued'] {
+  opacity: 0.55;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.at {
+  color: var(--ink-3);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  width: 86px;
+  color: var(--ink-2);
+  font-size: 12px;
+}
+
+.row[data-state='sent'] .status {
+  animation: pop 360ms var(--ease-out);
+}
+
+.row[data-state='read'] .status {
+  color: var(--ink);
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateX(6px);
+  }
+}

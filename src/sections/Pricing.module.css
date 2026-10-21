@@ -1,0 +1,160 @@
+.section {
+  padding-block: clamp(88px, 11vw, 144px);
+  background: var(--paper);
+}
+
+.header {
+  max-width: 44rem;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.cell {
+  display: flex;
+}
+
+.plan {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 32px 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--paper);
+  transition:
+    transform var(--dur-slow) var(--ease-out),
+    box-shadow var(--dur-slow) var(--ease-out),
+    border-color var(--dur-slow) var(--ease-out);
+}
+
+.plan:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-float);
+  transform: translateY(-4px);
+}
+
+.featured {
+  border-color: transparent;
+  background: var(--forest-900);
+  color: var(--on-dark);
+}
+
+.featured:hover {
+  border-color: transparent;
+}
+
+.planHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.tag {
+  padding: 5px 10px;
+  border-radius: var(--r-pill);
+  background: var(--green-500);
+  color: var(--on-green);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.desc {
+  margin: 8px 0 0;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+
+.featured .desc {
+  color: var(--on-dark-2);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 28px 0 24px;
+}
+
+.currency {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.amount {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.featured .amount {
+  color: var(--green-500);
+}
+
+.period {
+  color: var(--ink-3);
+}
+
+.featured .period {
+  color: var(--on-dark-3);
+}
+
+.cta {
+  width: 100%;
+}
+
+.features {
+  display: grid;
+  gap: 12px;
+  margin: 28px 0 0;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.featured .features {
+  border-top-color: var(--line-dark);
+}
+
+.features li {
+  display: flex;
+  gap: 10px;
+}
+
+.features svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--green-600);
+}
+
+.featured .features svg {
+  color: var(--green-500);
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plan:hover {
+    transform: none;
+  }
+}

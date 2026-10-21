@@ -1,0 +1,67 @@
+.inline {
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: -2px;
+}
+
+.composerWrap {
+  position: relative;
+}
+
+.typed {
+  color: var(--ink);
+}
+
+.quick {
+  position: absolute;
+  right: 0;
+  bottom: 54px;
+  left: 0;
+  display: grid;
+  gap: 2px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--wa-panel);
+  box-shadow: var(--shadow-float);
+  animation: quickIn 260ms var(--ease-out) backwards;
+}
+
+.quickTitle {
+  padding: 2px 8px 6px;
+  color: var(--ink-3);
+  font-size: 11.5px;
+}
+
+.quickItem {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 10px;
+  color: var(--ink-2);
+  font-size: 13px;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    transform 90ms var(--ease-out);
+}
+
+.quickItem strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.quickActive {
+  background: var(--wa-hover);
+}
+
+.quickPressed {
+  background: var(--mint);
+  transform: scale(0.98);
+}
+
+@keyframes quickIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

@@ -1,0 +1,77 @@
+.canvas {
+  display: block;
+  width: 100%;
+  height: calc(100% - 60px);
+  background: var(--paper-2);
+}
+
+.dot {
+  fill: var(--line-strong);
+}
+
+.edge {
+  fill: none;
+  stroke: var(--green-600);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 700ms var(--ease-out);
+}
+
+.edgeOn {
+  stroke-dashoffset: 0;
+}
+
+.branch {
+  fill: var(--ink-3);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.box {
+  fill: var(--paper);
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  transition:
+    stroke var(--dur-slow) var(--ease-out),
+    stroke-width var(--dur-slow) var(--ease-out);
+}
+
+.iconBg {
+  fill: var(--paper-2);
+  transition: fill var(--dur-slow) var(--ease-out);
+}
+
+.icon {
+  color: var(--ink-2);
+  transition: color var(--dur-slow) var(--ease-out);
+}
+
+.title {
+  fill: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.sub {
+  fill: var(--ink-3);
+  font-size: 11px;
+}
+
+.nodeOn .box {
+  stroke: var(--green-600);
+  stroke-width: 1.5;
+}
+
+.nodeOn .iconBg {
+  fill: var(--mint);
+}
+
+.nodeOn .icon {
+  color: var(--green-700);
+}
+
+.pulse {
+  fill: var(--green-500);
+}

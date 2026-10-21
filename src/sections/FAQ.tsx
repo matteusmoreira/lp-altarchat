@@ -1,168 +1,87 @@
-import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { useId, useState } from 'react';
+import { ArrowRight, Plus } from 'lucide-react';
+import { Reveal } from '../components/Reveal';
+import { whatsappWithText } from '../constants';
+import styles from './FAQ.module.css';
 
-const faqs = [
+const QUESTIONS = [
   {
-    question: 'Preciso ter WhatsApp Business?',
-    answer: 'Não é obrigatório, mas recomendamos. Nossa plataforma funciona com qualquer número de WhatsApp, mas o WhatsApp Business oferece recursos adicionais que complementam nossa solução.',
+    q: 'Preciso ter WhatsApp Business?',
+    a: 'Não é obrigatório, mas recomendamos. O Altar Chat funciona com qualquer número de WhatsApp, e o WhatsApp Business traz recursos que complementam a plataforma.',
   },
   {
-    question: 'Posso usar mais de um número?',
-    answer: 'Sim! Dependendo do seu plano, você pode conectar múltiplos números de WhatsApp e gerenciar todos em um único dashboard. O plano Profissional permite 3 números e o Empresarial oferece números ilimitados.',
+    q: 'Posso usar mais de um número?',
+    a: 'Sim. Dependendo do plano, você conecta vários números e atende todos na mesma tela. O Profissional permite 3 números e o Empresarial não tem limite.',
   },
   {
-    question: 'Como funciona o chatbot?',
-    answer: 'Nosso construtor de chatbot é visual e intuitivo. Você cria fluxos de conversa arrastando e soltando elementos, sem precisar de conhecimento em programação. É possível criar respostas automáticas, qualificar leads e encaminhar para atendentes.',
+    q: 'Meu número corre risco de bloqueio?',
+    a: 'O bloqueio depende de como o número é usado, e nenhuma ferramenta elimina esse risco. O Altar Chat ajuda no que está ao seu alcance: disparos com intervalo aleatório, limite por minuto, variações da mensagem e horário previsto de cada envio. Envie para quem conhece a sua empresa.',
   },
   {
-    question: 'É seguro? Meus dados estão protegidos?',
-    answer: 'Totalmente. Utilizamos criptografia de ponta a ponta, servidores seguros e estamos em conformidade com a LGPD. Seus dados nunca são compartilhados com terceiros e realizamos backups automáticos diários.',
+    q: 'Como funcionam as automações?',
+    a: 'Você monta o fluxo arrastando blocos: mensagem de boas-vindas, horário de atendimento, menu de setores e encaminhamento para a fila certa. Não precisa programar.',
   },
   {
-    question: 'Posso cancelar quando quiser?',
-    answer: 'Sim, sem multa ou taxa de cancelamento. Você tem controle total sobre sua assinatura. Ao cancelar, você mantém acesso até o final do período pago.',
+    q: 'A IA responde sozinha?',
+    a: 'Você escolhe. Ela pode responder sozinha ou só sugerir a resposta para o atendente aprovar. Em qualquer modo, usa os documentos que você enviar e pausa quando alguém da equipe assume a conversa.',
   },
   {
-    question: 'Tem suporte técnico?',
-    answer: 'Oferecemos suporte por email para todos os planos. Nos planos Profissional e Empresarial, você tem acesso a suporte prioritário via chat e, no plano Empresarial, atendimento 24/7 com gerente de conta dedicado.',
+    q: 'Meus dados ficam protegidos?',
+    a: 'Cada empresa tem os seus dados separados, cada atendente vê só o que a permissão dele libera, e há ferramentas de LGPD para exportar ou apagar os dados de um contato.',
+  },
+  {
+    q: 'Posso cancelar quando quiser?',
+    a: 'Sim, sem multa nem taxa de cancelamento. Ao cancelar, o acesso continua até o fim do período pago.',
   },
 ];
 
 export function FAQ() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const toggleFaq = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const [open, setOpen] = useState(0);
+  const baseId = useId();
 
   return (
-    <section
-      id="faq"
-      ref={sectionRef}
-      className="relative py-16 sm:py-20 lg:py-32 overflow-hidden"
-    >
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white" />
-      
-      {/* Decorative Elements */}
-      <div className="absolute top-10 sm:top-20 right-10 sm:right-20 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] bg-whatsapp-green/5 rounded-full blur-[50px] sm:blur-[80px]" />
-      <div className="absolute bottom-10 sm:bottom-20 left-10 sm:left-20 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] bg-whatsapp-dark/5 rounded-full blur-[60px] sm:blur-[100px]" />
-
-      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-14 lg:mb-16">
-          <div
-            className={`inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-whatsapp-green/10 rounded-full mb-4 sm:mb-6 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+    <section id="duvidas" className={styles.section}>
+      <div className={`container ${styles.layout}`}>
+        <Reveal className={styles.aside}>
+          <p className="eyebrow">Dúvidas</p>
+          <h2 className="section-title">Perguntas que todo mundo faz antes de começar.</h2>
+          <p className={styles.help}>Não achou a sua? A gente responde pelo WhatsApp, com gente de verdade.</p>
+          <a
+            href={whatsappWithText('Olá! Tenho uma dúvida sobre o Altar Chat.')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--ghost"
           >
-            <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-whatsapp-green" />
-            <span className="text-xs sm:text-sm font-medium text-whatsapp-dark">DÚVIDAS FREQUENTES</span>
-          </div>
+            Perguntar no WhatsApp
+            <ArrowRight size={18} aria-hidden="true" />
+          </a>
+        </Reveal>
 
-          <h2
-            className={`font-poppins font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 delay-100 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            Tire suas{' '}
-            <span className="text-gradient">dúvidas</span>
-          </h2>
-
-          <p
-            className={`text-base sm:text-lg text-gray-600 px-2 sm:px-0 transition-all duration-700 delay-200 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            Ainda tem perguntas? Nossa equipe está pronta para ajudar
-          </p>
-        </div>
-
-        {/* FAQ Items */}
-        <div className="space-y-3 sm:space-y-4">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className={`transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-              style={{ transitionDelay: `${300 + index * 100}ms` }}
-            >
-              <div
-                className={`bg-white rounded-xl sm:rounded-2xl border transition-all duration-300 ${
-                  openIndex === index
-                    ? 'border-whatsapp-green/30 shadow-lg shadow-whatsapp-green/5'
-                    : 'border-gray-100 hover:border-gray-200'
-                }`}
-              >
-                <button
-                  onClick={() => toggleFaq(index)}
-                  className="w-full flex items-center justify-between p-4 sm:p-6 text-left"
-                >
-                  <span className="font-poppins font-semibold text-base sm:text-lg text-gray-900 pr-4">
-                    {faq.question}
-                  </span>
-                  <div
-                    className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 ${
-                      openIndex === index
-                        ? 'bg-whatsapp-green text-white rotate-180'
-                        : 'bg-gray-100 text-gray-500'
-                    }`}
+        <div className={styles.list}>
+          {QUESTIONS.map(({ q, a }, i) => {
+            const isOpen = open === i;
+            const panelId = `${baseId}-${i}`;
+            return (
+              <div key={q} className={styles.item} data-open={isOpen}>
+                <h3 className={styles.q}>
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => setOpen(isOpen ? -1 : i)}
                   >
-                    <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </div>
-                </button>
-
-                <div
-                  className={`grid transition-all duration-400 ${
-                    openIndex === index ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <div className="px-4 sm:px-6 pb-4 sm:pb-6">
-                      <div className="pt-2 border-t border-gray-100">
-                        <p className="text-sm sm:text-base text-gray-600 leading-relaxed pt-3 sm:pt-4">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </div>
+                    {q}
+                    <Plus size={20} aria-hidden="true" className={styles.icon} />
+                  </button>
+                </h3>
+                <div id={panelId} role="region" className={styles.panel} aria-hidden={!isOpen}>
+                  <div>
+                    <p>{a}</p>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Contact CTA */}
-        <div
-          className={`text-center mt-10 sm:mt-14 transition-all duration-700 delay-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">Não encontrou sua resposta?</p>
-          <button className="px-6 sm:px-8 py-2.5 sm:py-3 bg-whatsapp-green/10 text-whatsapp-dark font-semibold rounded-xl transition-all duration-300 hover:bg-whatsapp-green hover:text-white hover:shadow-glow text-sm sm:text-base">
-            Falar com Suporte
-          </button>
+            );
+          })}
         </div>
       </div>
     </section>
