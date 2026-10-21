@@ -58,7 +58,7 @@ Gancho: a página é o próprio produto. Começa com uma caixa de entrada que se
 
 ## Estado (2026-10-20)
 
-- Todas as seções prontas na branch `feat/nova-landing`, enviada ao GitHub e **não mesclada** na `main`. Prévia (exige login no Vercel): https://lp-altarchat-git-feat-nova-landing-matteusmoreira.vercel.app
+- Aprovada pelo dono e mesclada na `main` em 2026-10-20 (PR #1); em produção em https://altarchat.com.br (deploy do Vercel `success`).
 - `npm run lint` e `npm run build` passam. `node scratch/landing/check.mjs` (no repo do app) não acusa erro de console nem rolagem horizontal em 360, 390, 768, 1024 e 1440 px. Com movimento reduzido, a seção do caos fica estática e já organizada.
 - Seções antigas removidas: Testimonials, HowItWorks, CTA, ParticlesBackground e `assets/logo.png`. A pasta `src/components/ui/` (shadcn) e o `src/App.css` já não eram usados antes; ficaram como estavam.
 
